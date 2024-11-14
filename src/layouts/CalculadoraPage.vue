@@ -1,41 +1,177 @@
 <template>
-  <div class="center-container">
-    <div class="container">
-      <div class="display">{{ display || 0 }}</div>
+  <q-layout view="lHh Lpr lFf">
+    <q-page-container>
+      <q-page class="flex flex-center bg-black text-white">
+        <q-card flat bordered class="q-pa-md" style="width: 320px">
+          <!-- Display -->
+          <q-input
+            v-model="display"
+            readonly
+            dense
+            class="q-pa-sm text-end text-h5 bg-grey-9 text-white"
+            style="border: 1px solid #1c1c1c; color: white"
+          />
 
-      <div @click="clear" class="del operacao">DEL</div>
-      <div @click="metodoDivide" class="operacao">/</div>
-      <div @click="getDigitado('7')" class="numeros">7</div>
-      <div @click="getDigitado('8')" class="numeros">8</div>
-      <div @click="getDigitado('9')" class="numeros">9</div>
+          <!-- Botões -->
+          <div class="q-gutter-sm q-pt-md">
+            <!-- Primeira linha (DEL, /) -->
+            <div class="row q-gutter-sm">
+              <q-btn
+                @click="clear"
+                label="DEL"
+                color="negative"
+                flat
+                unelevated
+                class="col"
+              />
+              <q-btn
+                @click="metodoDivide"
+                label="/"
+                color="primary"
+                flat
+                unelevated
+                class="col"
+              />
+            </div>
 
-      <div @click="metodoMultiplicar" class="operacao">*</div>
-      <div @click="getDigitado('4')" class="numeros">4</div>
-      <div @click="getDigitado('5')" class="numeros">5</div>
-      <div @click="getDigitado('6')" class="numeros">6</div>
+            <!-- Linha com números e operadores -->
+            <div class="row q-gutter-sm">
+              <q-btn
+                @click="getDigitado('7')"
+                label="7"
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="getDigitado('8')"
+                label="8"
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="getDigitado('9')"
+                label="9"
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="metodoMultiplicar"
+                label="*"
+                color="primary"
+                flat
+                unelevated
+                class="col"
+              />
+            </div>
 
-      <div @click="metodoSubtrair" class="operacao">-</div>
-      <div @click="getDigitado('1')" class="numeros">1</div>
-      <div @click="getDigitado('2')" class="numeros">2</div>
-      <div @click="getDigitado('3')" class="numeros">3</div>
+            <div class="row q-gutter-sm">
+              <q-btn
+                @click="getDigitado('4')"
+                label="4"
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="getDigitado('5')"
+                label="5"
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="getDigitado('6')"
+                label="6"
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="metodoSubtrair"
+                label="-"
+                color="primary"
+                flat
+                unelevated
+                class="col"
+              />
+            </div>
 
-      <div @click="metodoSomar" class="operacao">+</div>
-      <div @click="getDigitado('0')" class="zero numeros">0</div>
-      <div @click="ponto" class="numeros">.</div>
-      <div @click="metodoCalcularOperacao" class="operacao">=</div>
-    </div>
-  </div>
+            <div class="row q-gutter-sm">
+              <q-btn
+                @click="getDigitado('1')"
+                label="1"
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="getDigitado('2')"
+                label="2"
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="getDigitado('3')"
+                label="3"
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="metodoSomar"
+                label="+"
+                color="primary"
+                flat
+                unelevated
+                class="col"
+              />
+            </div>
+
+            <div class="row q-gutter-sm">
+              <q-btn
+                @click="getDigitado('0')"
+                label="0"
+                flat
+                unelevated
+                class="col-6 bg-grey-7"
+              />
+              <q-btn
+                @click="ponto"
+                label="."
+                flat
+                unelevated
+                class="col bg-grey-7"
+              />
+              <q-btn
+                @click="metodoCalcularOperacao"
+                label="="
+                color="positive"
+                flat
+                unelevated
+                class="col"
+              />
+            </div>
+          </div>
+        </q-card>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script setup>
 import { ref } from "vue";
-//variáveis
+
+// variáveis
 const display = ref("");
 const operadorClicado = ref(false);
 const operador = ref(null);
 const resultadoClick = ref(null);
 
-// metodos
+// métodos
 const clear = () => {
   display.value = "";
   operador.value = null;
@@ -75,7 +211,7 @@ const metodoMultiplicar = () => {
 };
 
 const ponto = () => {
-  if (display.value.indexOf(".") === -1) {
+  if (!display.value.includes(".")) {
     display.value += ".";
   }
 };
@@ -92,62 +228,11 @@ const metodoCalcularOperacao = () => {
 </script>
 
 <style scoped>
-html,
-body {
+.q-page {
   background-color: black;
+  height: 100vh;
 }
-.center-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.container {
-  font-weight: bold;
-  color: white;
-  display: grid;
-  grid-template-rows: repeat(6, 0.5fr);
-  grid-template-columns: repeat(4, 1fr);
-  width: 300px;
-  height: 400px;
-}
-
-.zero {
-  grid-column: 1/3;
-}
-
-.del {
-  grid-column: 1/4;
-}
-
-.display {
-  padding: 30px;
-  border: 1px solid;
-  font-size: 2rem;
-  grid-column: 1/5;
-  text-align: right;
-  color: white;
-  background-color: #1c1c1c;
-}
-
-.operacao,
-.numeros {
-  padding: 30px;
-  font-size: 1.5rem;
-  border: 1px solid;
-  text-align: center;
-  transition: background-color 1s;
-}
-
-.operacao {
-  background-color: #df2d2dff;
-}
-
-.numeros {
-  background-color: #313127ff;
-}
-
-.operacao:active,
-.numeros:active {
-  background-color: rgb(151, 14, 14);
+.q-card {
+  max-width: 320px;
 }
 </style>
